@@ -1,0 +1,11 @@
+#!/usr/bin/env ruby
+# encoding: utf-8
+
+$:.unshift File.dirname(__FILE__) + '/../library'
+require 'oxide'
+
+Oxide::Torrent.new 'Hospitalet.S02E15.DANiSH.PDTV.XviD-TVBYEN' do |r|
+  r.directory = "~/#{r.name}"
+  r.announce  = "http://nordic-t.org/announce.php?passkey=cace1ae6c4633c44471a39be9b46f918"
+  r.private   = true
+end.dump "~/%s.torrent"
