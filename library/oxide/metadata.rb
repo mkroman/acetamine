@@ -10,7 +10,7 @@ module Oxide
   class Metadata
     attr_accessor :name
 
-    PIECE_LENGTH = 2**18
+    PieceLength = 2**18
 
     def initialize name, directory, options = {}
       @name, @directory = name, directory
@@ -30,7 +30,7 @@ module Oxide
         info: {
           files: files,
           name: @name,
-          piece_length: PIECE_LENGTH,
+          piece_length: PieceLength,
           pieces: pieces,
           private: private?,
         }
@@ -52,36 +52,9 @@ module Oxide
     end
 
     def pieces
-      String.new.tap do |pieces|
-        Find.find @directory do |path|
-          next unless File.file? path
-
-          File.open path do |file|
-            begin
-              piece = file.read PIECE_LENGTH
-              pieces.<< Digest::SHA1.digest piece
-            end until file.eof?
-          end
-        end
+      String.new.tap do |string|
       end
     end
-
-=begin
-    def pieces
-      String.new.tap do |pieces|
-        Find.find @directory do |path|
-          next unless File.file? path
-
-          File.open path do |file|
-            until file.eof?
-              piece = Digest::SHA1.digest file.read(2**18)
-              pieces.<< piece
-            end
-          end
-        end
-      end
-    end
-=end
 
     def bencode_path path
       path[@directory.length+1..-1].split ?/

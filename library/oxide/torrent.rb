@@ -12,17 +12,21 @@ module Oxide
       yield self if block_given?
     end
 
-    def build
-      Metadata.new @name, @directory, private: @private, announce: @announce
+    def dump filename
+      p build
     end
 
     def directory= directory
       @directory = File.expand_path directory
     end
 
-    def dump filename
-      filename = filename % @name
-      puts build.inspect
+  private
+    def build
+      @metadata ||= Metadata.new @name, @directory, additional
+    end
+
+    def additional
+      { private: @private == true, announce: @announce }
     end
   end
 end
