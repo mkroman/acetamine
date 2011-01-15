@@ -1,1 +1,5 @@
 *.swp
+.gitignore
+.DS_Store
+Torrent.Example-GRP
+Torrent.Example-GRP.torrent
